@@ -15,7 +15,8 @@ class Stripe::PaymentIntent
     setup_future_usage : String? = nil,
     transfer_group : String? = nil,
     capture_method : String? = nil,
-    expand : Array(String)? = nil
+    expand : Array(String)? = nil,
+    automatic_payment_methods : Hash(String, Bool)? = nil
   ) : PaymentIntent forall T, U
     customer = customer.as(Customer).id if customer.is_a?(Customer)
 
@@ -31,7 +32,7 @@ class Stripe::PaymentIntent
     io = IO::Memory.new
     builder = ParamsBuilder.new(io)
 
-    {% for x in %w(amount confirm currency customer description metadata usage on_behalf_of payment_method_types payment_method receipt_email setup_future_usage return_url transfer_group capture_method expand) %}
+    {% for x in %w(amount confirm currency customer description metadata usage on_behalf_of payment_method_types payment_method receipt_email setup_future_usage return_url transfer_group capture_method expand automatic_payment_methods) %}
       builder.add({{x}}, {{x.id}}) unless {{x.id}}.nil?
     {% end %}
 
