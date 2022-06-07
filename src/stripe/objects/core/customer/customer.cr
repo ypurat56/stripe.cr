@@ -3,6 +3,17 @@
 @[EventPayload]
 class Stripe::Customer
   include JSON::Serializable
+  include StripeMethods
+
+  add_retrieve_method
+  add_list_method(
+    email : String? = nil,
+    created : Hash(String, Int32)? = nil,
+    limit : Int32? = nil,
+    starting_after : String? = nil,
+    ending_before : String? = nil
+  )
+  add_delete_method
 
   class TaxInfo
     include JSON::Serializable

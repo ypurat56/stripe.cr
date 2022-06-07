@@ -2,6 +2,18 @@
 @[EventPayload]
 class Stripe::Subscription
   include JSON::Serializable
+  include StripeMethods
+
+  add_retrieve_method
+  add_list_method(
+    customer : String? = nil,
+    plan : String? = nil,
+    status : String? | Stripe::Subscription::Status? = nil,
+    limit : Int32? = nil,
+    starting_after : String? = nil,
+    ending_before : String? = nil
+  )
+  add_delete_method
 
   enum Status
     Incomplete
@@ -65,6 +77,7 @@ class Stripe::Subscription
   getter latest_invoice : String? | Stripe::Invoice?
   getter pending_setup_intent : String? | Stripe::SetupIntent?
   getter schedule : String?
+  getter metadata : Hash(String, String)?
 
   getter plan : Stripe::Plan?
 
