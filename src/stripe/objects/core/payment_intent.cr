@@ -40,4 +40,5 @@ class Stripe::PaymentIntent
   @[JSON::Field(converter: Enum::StringConverter(Stripe::PaymentIntent::Status))]
   getter status : Status?
   getter usage : String?
+  getter amount : Int64?
 end
